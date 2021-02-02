@@ -1,7 +1,9 @@
 # SXE
 Some Xalan Extensions (SXE)
 
-Adds functionality to Xalan that I've found helpful over the last 20 years of contracting.
+Adds functionality to Xalan that I've found helpful over the last 20 years of contracting.<br/>
+
+See the example below for how to add logging to your XSLT.  For further information see the javadoc which is extensive.
 
 ```
 <?xml version="1.0" encoding="UTF-8"?>
