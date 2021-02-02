@@ -5,7 +5,7 @@
  * beans and EJBs, creating charts and graphs, performing assertions and logging and much much
  * more.
  * <br/><br/>
- * One thing you need to know, is that the SXE elements have 2 differen types of attributes.  One
+ * One thing you need to know, is that the SXE elements have 2 different types of attributes.  One
  * is called an <b>XPath</b> attribute, the other is called a <b>Template</b> attribute.  So,
  * what's the difference?
  * <br/><br/>
