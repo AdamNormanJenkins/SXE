@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- For assistance related to logback-translator or configuration  -->
+<!-- files in general, please contact the logback user mailing list -->
+<!-- at http://www.qos.ch/mailman/listinfo/logback-user             -->
+<!--                                                                -->
+<!-- For professional support please see                            -->
+<!--    http://www.qos.ch/shop/products/professionalSupport         -->
+<!--                                                                -->
+<configuration
+        xmlns="http://ch.qos.logback/xml/ns/logback"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://ch.qos.logback/xml/ns/logback http://ch.qos.logback/xml/ns/logback/logback.xsd">
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <!--<withJansi>true</withJansi>-->
+        <encoder>
+            <!-- %c.%M\(%F:%L\), %caller{1}%msg%n -->
+            <pattern>[%highlight(%-5level)][%d{HH:mm:ss.SSS}] [%thread]%n%C.%M\(%F:%L\)%n%msg%n</pattern>
+            <!--<charset>UTF-8</charset>-->
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <append>true</append>
+        <file>@log.path@/@project.groupId@/@project.artifactId@.log</file>
+        <encoder>
+            <pattern>[%-5level][%d{HH:mm:ss.SSS}] [%thread] %C.%M\(%F:%L\)%n%msg%n%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <!-- 过滤掉改级以下别的日志, 线上建议 WARN -->
+            <level>INFO</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 日志路径, 根据实际情况修改 -->
+            <fileNamePattern>@log.path@/@project.groupId@/@project.artifactId@-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- 最多保留天数 -->
+            <maxHistory>60</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <!-- <appender-ref ref="FILE"/> -->
+    </root>
+
+    <logger name="org.apache" level="WARN"/>
+    <logger name="org.springframework" level="WARN"/>
+
+    <logger name="net.adamjenkins.sxe" level="@log.level@"/>
+
+</configuration>

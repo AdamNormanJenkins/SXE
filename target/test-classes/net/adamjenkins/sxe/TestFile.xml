@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<industry-details>
+    <sector name="Energy" code="10">
+        <group name="Energy" code="1010">
+            <industry name="Energy Equipment &amp; Services" code="101010">
+                <segment name="Oil &amp; Gas Drilling" code="10101010" numberOfCompanies="10" companiesLastYear="3">
+                    <description>Drilling contractors and owners of drilling rigs that contract their services for drilling wells</description>
+                </segment>
+                <segment name="Oil &amp; Gas Equipment &amp; Services" code="10101020"  numberOfCompanies="25" companiesLastYear="6">
+                    <description>Manufacturers of equipment, including drilling rigs and equipment, and providers of supplies and services to companies involved in the drilling, evaluation and completion of oit and gas wells.</description>
+                </segment>
+            </industry>
+            <industry name="Oil, Gas &amp; Consumable Fuels" code="101020">
+                <segment name="Integrated Oil &amp; Gas" code="10102010" numberOfCompanies="2" companiesLastYear="7">
+                    <description>Integrated oil companies engaged in the exploration and production of oil and gas, as well as at least one other significant activity in either refining, marketing and transportation, or chemicals.</description>
+                </segment>
+                <segment name="Oil &amp; Gas Exploration &amp; Production" code="10102020" numberOfCompanies="15" companiesLastYear="20">
+                    <description>Companies engaged in the exploration and production of oil and gas not classified elsewhere.</description>
+                </segment>
+                <segment name="Oil &amp; Gas Refining &amp; Marketing" code="10102030" numberOfCompanies="12" companiesLastYear="2">
+                    <description>Companies engaged in the refining and marketing of oil, gas, and/or refined products not classified in the integrated Oil &amp; Gas or Independent Power Producers &amp; Energy Traders Sub-Industries.</description>
+                </segment>
+                <segment name="Oil &amp; Gas Storage &amp; Transportation" code="10102040" numberOfCompanies="25" companiesLastYear="20">
+                    <description>Companies engaged in the storage and/or transportation of oil, gas and/or refined products.  Includes diversified midstream natural gas companies facing competitive markets, oil and refined product pipelines, coal slurry pipelines and oil &amp; gas shipping companies.</description>
+                </segment>
+                <segment name="Coal &amp; Consumable Fuels" code="10102050" numberOfCompanies="12" companiesLastYear="1">
+                    <description>Companies primarily involved in the production and mining of coal, related products and other consumable fuels related to the generation of energy.  Excludes companies primarily producing gases classified in the industrial Gases segment.</description>
+                </segment>
+            </industry>
+        </group>
+    </sector>
+    <sector name="Materials" code="15">
+        <group name="Materials" code="1510">
+            <industry name="Chemicals" code="151010">
+                <segment name="Commodity Chemicals" code="15101010" numberOfCompanies="3" companiesLastYear="4">
+                    <description>Companies that primarily produce industrial chemicals and basic chemicals.  Including but not limited to plastics, synthetic fibers, firms, commodity-based paints &amp; pigments, explosives and petrochemicals.  Excludes chemical companies classified in the Diversified Chemicals, Fertilizers &amp; Agricultural Chemicals, Industrial Gases, or Specialty Chemicals sub-industries.</description>
+                </segment>
+                <segment name="Diversified Chemicals" code="15101020" numberOfCompanies="10" companiesLastYear="11">
+                    <description>Manufacturers of a diversified rage of chemical products not classified in the industrial Gases, Commodity Chemicals, Specialty Chemicals or Fertilizers &amp; Agricultural Chemicals sub-industries.</description>
+                </segment>
+                <segment name="Fertilizers &amp; Agricultrual Chemicals" code="15101030" numberOfCompanies="12" companiesLastYear="1">
+                    <description>Producers of fertilizers, pesticides, potash or other agricultrure-related chemicals not classified elsewhere.</description>
+                </segment>
+                <segment name="Industrial Gases" code="15101040" numberOfCompanies="1" companiesLastYear="17">
+                    <description>Manufacturers of Industrial gases.</description>
+                </segment>
+                <segment name="Specialty Chemicals" code="15101050" numberOfCompanies="17" companiesLastYear="12">
+                    <description>Companies that primarily produce high value-added chemicals used in the manufacture of a wide variety of products, including but not limited to fine chemicals, additives, advanced polymers, adhesives, sealants and specialty paints, pigments and coatings.</description>
+                </segment>
+            </industry>
+            <industry name="Construction Materials" code="151020">
+                <segment name="Construction Materials" code="15102010" numberOfCompanies="11" companiesLastYear="18">
+                    <description>Manufacturers of construction materials including sand, clay, gypsum, lime, aggregates, cement, concrete and bricks.  Other finished or semi-finished building materials are classified in the Building Products segment.</description>
+                </segment>
+            </industry>
+            <industry name="Containers &amp; Packaging" code="151030">
+                <segment name="Metal &amp; Glass Containers" code="15103010" numberOfCompanies="12" companiesLastYear="11">
+                    <description>Manufacturers of metal, galss or plastic containers.  Including corks and caps.</description>
+                </segment>
+                <segment name="Paper Packaging" code="15103020" numberOfCompanies="11" companiesLastYear="11">
+                    <description>Manufacturers of paper and cardboard containers and packaging.</description>
+                </segment>
+            </industry>
+            <industry name="Metals &amp; Mining" code="151040">
+                <segment name="Aluminium" code="15104010" numberOfCompanies="1" companiesLastYear="1">
+                    <description>Producers of aluminium and related products, including companies that mine or process bauxite and companies that recycle aluminium to produce finished or semi-finished products.  Excludes companies that primarily produce aluminium building materials classified in the Building Products segment</description>
+                </segment>
+                <segment name="Diversified Metals &amp; Mining" code="15104020" numberOfCompanies="4" companiesLastYear="5">
+                    <description>Companies engaged in diversidifed production of extraction of metals and minerals not classified elsewhere.</description>
+                </segment>
+                <segment name="Gold" code="15104030" numberOfCompanies="4" companiesLastYear="4">
+                    <description>Producers of gold and related products, including companies that mine or process gold and the South African finance houses which primarily invest in, but do not operate, gold mines.</description>
+                </segment>
+                <segment name="Precious Metals &amp; Minerals" code="15104040" numberOfCompanies="12" companiesLastYear="15">
+                    <description>Companies mining precious metals and minerals not classified in the Gold segment.  Includes companies primarily mining platinum.</description>
+                </segment>
+                <segment name="Steel" code="15104050" numberOfCompanies="10" companiesLastYear="20">
+                    <description>Producres of iron and steel and related products.</description>
+                </segment>
+            </industry>
+            <industry name="Paper &amp; Forest Products" code="151050">
+                <segment name="Forest Products" code="15105010" numberOfCompanies="12" companiesLastYear="18">
+                    <description>Manufactureres of timber and related wood products.  Including lumber for the building industry.</description>
+                </segment>
+                <segment name="Paper Products" code="15105020" numberOfCompanies="11" companiesLastYear="11">
+                    <description>Manufacturers of all grades of paper.  Excludes companies specializing in paper packaging classified in the Paper Packaging segment.</description>
+                </segment>
+            </industry>
+        </group>
+    </sector>
+</industry-details>
+
