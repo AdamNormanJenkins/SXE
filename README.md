@@ -16,11 +16,11 @@ See the example below for how to add logging to your XSLT.  For further informat
                 extension-element-prefixes="log">
     <xsl:output method="xml"/>
     
-    <xsl:variable name="testvar">hello world</xsl:variable>
+    <xsl:variable name="var">world</xsl:variable>
     
     <xsl:template match="/">
-    	<log:debug message="hello test"/>
-		<log:debug select="$testvar"/>
+    	<log:debug message="hello {$var} here is an attribute {./someelement/@someattribute}"/>
+	<log:info select="./someotherelement/@someotherattribute"/>
     </xsl:template>            
 </xsl:stylesheet>
 ```
