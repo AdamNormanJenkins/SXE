@@ -3,7 +3,7 @@ Some Xalan Extensions (SXE)
 
 Adds functionality to Xalan that I've found helpful over the last 20 years of contracting.
 
-<pre>
+```
 <?xml version="1.0" encoding="UTF-8"?>
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
@@ -21,4 +21,4 @@ Adds functionality to Xalan that I've found helpful over the last 20 years of co
 		<log:debug select="$testvar"/>
     </xsl:template>            
 </xsl:stylesheet>
-</pre>
+```
