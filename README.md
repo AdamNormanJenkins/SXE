@@ -6,7 +6,7 @@ This project is a bunch of extensions to Xalan (Java) XSLT processing that I've 
 It adds simple but handy stuff to Xalan like logging, assertions, error checking, interaction with things like spring etc etc
 
 For usage see the javadoc (which is extensive).  A quick example below is shown for how to add java logging to your XSLT.
-
+<code>
 <?xml version="1.0" encoding="UTF-8"?>
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
@@ -25,6 +25,7 @@ For usage see the javadoc (which is extensive).  A quick example below is shown 
 		<log:debug select="./someelement/@someattribute"/>
     </xsl:template>            
 </xsl:stylesheet>
+</code>
 
 The following packages are part of SXE:
 
