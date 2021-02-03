@@ -5,7 +5,7 @@
     <xsl:output method="text"/>
     <xsl:template match="/">
         <spring:context base="CLASSPATH">
-            <spring:resource location="/net/java/dev/sxe/spring/spring-config.xml"/>
+            <spring:resource location="/net/adamjenkins/sxe/spring/spring-config.xml"/>
         </spring:context>
         <spring:bean id="mock"/>
     </xsl:template>

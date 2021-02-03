@@ -6,7 +6,7 @@
     <xsl:template match="/">
         <xsl:variable name="ctx">
             <spring:context base="CLASSPATH">
-                <spring:resource location="/net/java/dev/sxe/spring/spring-config.xml"/>
+                <spring:resource location="/net/adamjenkins/sxe/spring/spring-config.xml"/>
             </spring:context>
         </xsl:variable>
         <spring:bean id="mock" context="$ctx"/>

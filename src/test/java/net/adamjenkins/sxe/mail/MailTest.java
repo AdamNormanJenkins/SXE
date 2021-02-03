@@ -16,13 +16,14 @@
  */
 package net.adamjenkins.sxe.mail;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
-import java.util.List;
-import javax.mail.Message;
+import de.saly.javamail.mock2.MailboxFolder;
+import de.saly.javamail.mock2.MockMailbox;
 import net.adamjenkins.sxe.XSLTBasedTest;
 import net.adamjenkins.sxe.util.XSLTErrorListener;
-import org.jvnet.mock_javamail.Mailbox;
 
 /**
  * Tests sending emails.
@@ -37,10 +38,11 @@ public class MailTest extends XSLTBasedTest{
     protected void processResults(String output, XSLTErrorListener listener) {
         super.processResults(output, listener);
         try{
-            List<Message> inbox = Mailbox.get("mail@test.com");
-            assertEquals("Incorrect number of emails in box.", inbox.size(),1);
-            assertEquals("Results were incorrect", result, inbox.get(0).getContent());
-            assertTrue("Incorrect message content type", inbox.get(0).getContentType().startsWith("text/plain"));
+            MockMailbox mb = MockMailbox.get("mail@test.com");
+            MailboxFolder inbox = mb.getInbox();
+            assertEquals("Incorrect number of emails in box.", inbox.getMessageCount(),1);
+            assertEquals("Results were incorrect", result, inbox.getByMsgNum(1).getContent());
+            assertTrue("Incorrect message content type", inbox.getByMsgNum(1).getContentType().startsWith("text/plain"));
         }catch(Exception e){
             fail(e.getMessage());
         }

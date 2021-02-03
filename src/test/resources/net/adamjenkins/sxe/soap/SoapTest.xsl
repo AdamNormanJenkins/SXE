@@ -4,11 +4,12 @@
                 extension-element-prefixes="soap" version="1.0">
     <xsl:output method="xml"/>
     <xsl:template match="/">
-        <soap:invoke endPoint="http://www50.brinkster.com/vbfacileinpt/np.asmx" action="http://microsoft.com/webservices/GetPrimeNumbers">
+        <soap:invoke endPoint="http://www.dneonline.com/calculator.asmx" action="http://tempuri.org/Add">
             <soap:body>
-              <GetPrimeNumbers xmlns="http://microsoft.com/webservices/">
-                 <max>10</max>
-              </GetPrimeNumbers>
+			    <Add xmlns="http://tempuri.org/">
+			      <intA>1</intA>
+			      <intB>1</intB>
+			    </Add>
             </soap:body>
         </soap:invoke>
     </xsl:template>

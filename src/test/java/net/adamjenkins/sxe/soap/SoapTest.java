@@ -28,10 +28,10 @@ import net.adamjenkins.sxe.util.XSLTErrorListener;
  */
 public class SoapTest extends XSLTBasedTest{
 
-    private String result = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + 
-                            "<GetPrimeNumbersResponse xmlns=\"http://microsoft.com/webservices/\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">" +
-                             "<GetPrimeNumbersResult>1,3,5,7</GetPrimeNumbersResult>" +
-                             "</GetPrimeNumbersResponse>";
+    private String result = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+    		+ "<AddResponse xmlns=\"http://tempuri.org/\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">"
+    		+ "<AddResult>2</AddResult>"
+    		+ "</AddResponse>";
 
 
     @Override

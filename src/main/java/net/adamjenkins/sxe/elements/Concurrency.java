@@ -210,8 +210,7 @@ public class Concurrency extends AbstractExtensionElement{
      */
     public synchronized void parallel(XSLProcessorContext context, ElemExtensionCall extensionElement) throws ParserConfigurationException {
         //TODO: finish this extension BIG JOB!
-        /*
-        EmbeddedStylesheetDefinition styleSheet;
+        /*EmbeddedStylesheetDefinition styleSheet;
         SerializationHandler handler = context.getTransformer().getSerializationHandler();
         if(!(handler instanceof SXEMultithreadedSerializationHandler)){
             //we're still using an old handler here, better do something with it
@@ -241,8 +240,7 @@ public class Concurrency extends AbstractExtensionElement{
             }
         }else{
             processor.start();
-        }
-        */
+        }*/
     }
 
     /**
