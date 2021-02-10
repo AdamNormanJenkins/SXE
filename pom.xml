@@ -20,7 +20,7 @@
 	</licenses>
  
 	<scm>
-	  <url>https://github.com/AdamNormanJenkins/SXE</url>
+	  <url>https://github.com/AdamNormanJenkins/SXE.git</url>
 	</scm>
 	
     <properties>
