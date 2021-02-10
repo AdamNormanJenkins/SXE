@@ -6,8 +6,22 @@
 	<artifactId>sxe</artifactId>
 	<packaging>jar</packaging>
 	<version>1.0</version>
-	<name>sxe</name>
-	<url>http://maven.apache.org</url>
+	
+  	<name>Some Xalan Extensions</name>
+  	<description>Some really helpful Xalan extensions</description>
+  	<url>https://github.com/AdamNormanJenkins/SXE</url>
+ 
+	<licenses>
+	  <license>
+	    <name>Apache License, Version 2.0</name>
+	    <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+	    <distribution>repo</distribution>
+	  </license>
+	</licenses>
+ 
+	<scm>
+	  <url>https://github.com/AdamNormanJenkins/SXE</url>
+	</scm>
 	
     <properties>
         <maven.compiler.source>14</maven.compiler.source>
