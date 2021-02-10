@@ -23,17 +23,24 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import javax.xml.transform.TransformerException;
+
 import org.apache.commons.beanutils.ConstructorUtils;
 import org.apache.commons.beanutils.MethodUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.xalan.extensions.XSLProcessorContext;
 import org.apache.xalan.templates.ElemExtensionCall;
+import org.apache.xalan.templates.ElemVariable;
+import org.apache.xalan.templates.PassThroughVariableStack;
+import org.apache.xalan.templates.StylesheetRoot;
+import org.apache.xalan.templates.VarBridge;
+import org.apache.xpath.VariableStack;
 import org.apache.xpath.objects.XObject;
 import org.w3c.dom.Attr;
 import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+
+import net.adamjenkins.sxe.util.XSLTUtil;
 
 /**
  * Element for easily working with java objects.
@@ -89,7 +96,7 @@ public class JavaBean extends AbstractExtensionElement{
      * @param extensionElement
      */
     public void instantiate(XSLProcessorContext context, ElemExtensionCall extensionElement) throws TransformerException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException, FileNotFoundException, ClassNotFoundException, MalformedURLException, IOException{
-        if(!passesAttributeValidation(extensionElement, context, "class")) return;
+        if(!passesAttributeValidation(extensionElement, context, "class")) throw new TransformerException("Must spedify class name");
         String className = getAttribute("class", context, extensionElement);
         try{
             parameterCapture.put(Thread.currentThread(), new ArrayList<Object>());
@@ -101,14 +108,17 @@ public class JavaBean extends AbstractExtensionElement{
                         extensionElement,
                         "Problem with parameters, invalid number of parameters interpreted",
                         context);
-                return;
+                throw null;
             }
-            Object newObject = ConstructorUtils.invokeConstructor(Class.forName(className), parameterCapture.get(Thread.currentThread()).toArray());
-            if(!setVariableIfPossible(newObject, extensionElement)) context.outputToResultTree(context.getStylesheet(), newObject);
+            Object newObj = ConstructorUtils.invokeConstructor(Class.forName(className), parameterCapture.get(Thread.currentThread()).toArray());
+            XSLTUtil.setVariable(context, extensionElement, newObj);
+            
         }finally{
             parameterCapture.remove(Thread.currentThread());
         }
     }
+    
+
 
     /**
      * Invokes a method on a java bean, and adds the result (if anything is returned from the method) to the output tree.
@@ -255,7 +265,7 @@ public class JavaBean extends AbstractExtensionElement{
         Object target = getXObject("target", context, extensionElement).object();
         String propertyName = getAttribute("property", context, extensionElement);
         Object returnValue = PropertyUtils.getProperty(target, propertyName);
-        if(!setVariableIfPossible(returnValue, extensionElement)){
+        if(!setVariableIfPossible(context.getTransformer(), returnValue, extensionElement)){
             context.outputToResultTree(context.getStylesheet(), returnValue.toString());
         }
     }

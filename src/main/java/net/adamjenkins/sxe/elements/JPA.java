@@ -101,7 +101,7 @@ public class JPA extends AbstractExtensionElement{
         EntityManager manager;
         if(props.size() > 0) manager = factory.createEntityManager(props);
         else manager = factory.createEntityManager();
-        if(!setVariableIfPossible(manager, extensionElement)){
+        if(!setVariableIfPossible(context.getTransformer(), manager, extensionElement)){
             if(globalEntityManager != null){
                 logError(this.getClass(), extensionElement, "Global entity manager already exists", context);
                 return;
@@ -161,7 +161,7 @@ public class JPA extends AbstractExtensionElement{
         }
         EntityTransaction t = m.getTransaction();
         t.begin();
-        if(!setVariableIfPossible(t, extensionElement)){
+        if(!setVariableIfPossible(context.getTransformer(), t, extensionElement)){
             globalTransaction = t;
         }
     }
@@ -269,7 +269,7 @@ public class JPA extends AbstractExtensionElement{
                 Class.forName(getAttribute("class", context, extensionElement)),
                 getXObject("id", context, extensionElement).object()
         );
-        if(!setVariableIfPossible(loaded, extensionElement)){
+        if(!setVariableIfPossible(context.getTransformer(), loaded, extensionElement)){
             context.outputToResultTree(context.getStylesheet(), loaded);
         }
     }
@@ -305,7 +305,7 @@ public class JPA extends AbstractExtensionElement{
                 Class.forName(getAttribute("class", context, extensionElement)),
                 getXObject("id", context, extensionElement).object()
         );
-        if(!setVariableIfPossible(loaded, extensionElement)){
+        if(!setVariableIfPossible(context.getTransformer(), loaded, extensionElement)){
             context.outputToResultTree(context.getStylesheet(), loaded);
         }
     }

@@ -215,11 +215,12 @@ public class SafeProcessing extends AbstractExtensionElement {
      * </pre></code>
      * @param context
      * @param extensionElement
+     * @throws TransformerException 
      */
-    public void retrieveErrors(XSLProcessorContext context, ElemExtensionCall extensionElement){
+    public void retrieveErrors(XSLProcessorContext context, ElemExtensionCall extensionElement) throws TransformerException{
         try{
             XSLTErrorListener errorListener = (XSLTErrorListener)context.getTransformer().getErrorListener();
-            setVariableIfPossible(errorListener.getAllErrors(), extensionElement);
+            setVariableIfPossible(context.getTransformer(), errorListener.getAllErrors(), extensionElement);
         }catch(ClassCastException e){
             logError(this.getClass(), extensionElement, "Error listener is not an SXE error listener", context);
         }

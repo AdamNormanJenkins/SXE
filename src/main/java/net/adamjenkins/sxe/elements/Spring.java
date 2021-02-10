@@ -25,11 +25,14 @@ import javax.xml.transform.TransformerException;
 import org.apache.xalan.extensions.XSLProcessorContext;
 import org.apache.xalan.templates.ElemExtensionCall;
 import org.apache.xalan.templates.ElemVariable;
+import org.apache.xpath.objects.XObject;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.springframework.web.context.support.XmlWebApplicationContext;
 import org.springframework.web.portlet.context.XmlPortletApplicationContext;
+
+import net.adamjenkins.sxe.util.XSLTUtil;
 
 /**
  * Element for loading spring beans into an XSLT stylesheet.
@@ -87,7 +90,7 @@ public class Spring extends AbstractExtensionElement{
      * @param extensionElement
      */
     public void context(XSLProcessorContext context, ElemExtensionCall extensionElement) throws TransformerException{
-        if(!passesAttributeValidation(extensionElement, context, "base")) return;
+        if(!passesAttributeValidation(extensionElement, context, "base")) throw new TransformerException("Missing attribute 'base'");
         resources = new ArrayList<String>();
         context.getTransformer().executeChildTemplates(extensionElement, true);
         Base base = Base.valueOf(getAttribute("base", context, extensionElement));
@@ -107,7 +110,13 @@ public class Spring extends AbstractExtensionElement{
                 springContext = new ClassPathXmlApplicationContext(resources.toArray(new String[0]));
                 break;
         }
-        if(!setVariableIfPossible(springContext, extensionElement)) defaultContext = springContext;      
+        //if the parent is a variable element then return the value, otherwise set the default
+        //context and return null
+        if(extensionElement.getParentElem() instanceof ElemVariable) {
+        	XSLTUtil.setVariable(context, extensionElement, springContext);
+        }else {
+        	defaultContext = springContext;        	
+        }
     }
 
     /**
@@ -160,7 +169,8 @@ public class Spring extends AbstractExtensionElement{
         if(!passesAttributeValidation(extensionElement, context, "id")) return;
         AbstractApplicationContext ctx;
         if(hasAttribute(extensionElement, "context")){
-            ctx = (AbstractApplicationContext)getXObject("context", context, extensionElement).object();
+        	XObject xObj = XSLTUtil.getXObject("context", context, extensionElement);
+            ctx = (AbstractApplicationContext)xObj.object();
         }else{
             if(defaultContext == null){
                 logError(this.getClass(),
@@ -173,7 +183,7 @@ public class Spring extends AbstractExtensionElement{
             }
         }
         Object bean = ctx.getBean(getAttribute("id", context, extensionElement));
-        if(setVariableIfPossible(bean, extensionElement)) return;
+        if(setVariableIfPossible(context.getTransformer(), bean, extensionElement)) return;
         else{
             context.outputToResultTree(context.getStylesheet(), bean);
         }

@@ -120,7 +120,7 @@ public class Hibernate extends AbstractExtensionElement {
         }
         currentConfiguration = config;
         context.getTransformer().executeChildTemplates(extensionElement, true);
-        if(!setVariableIfPossible(config.buildSessionFactory(), extensionElement)){
+        if(!setVariableIfPossible(context.getTransformer(), config.buildSessionFactory(), extensionElement)){
             globalSessionFactory = config.buildSessionFactory();
         }
         currentConfiguration = null;
@@ -237,7 +237,7 @@ public class Hibernate extends AbstractExtensionElement {
      */
     public void openSession(XSLProcessorContext context, ElemExtensionCall extensionElement) throws HibernateException, TransformerException{
         //setVariableIfPossible(getSession(context, extensionElement, true), extensionElement);
-        if(!setVariableIfPossible(getSessionFactory(context, extensionElement).openSession(), extensionElement)){
+        if(!setVariableIfPossible(context.getTransformer(), getSessionFactory(context, extensionElement).openSession(), extensionElement)){
             //setting a global session
             if(globalSession != null){
                 logError(this.getClass(),
@@ -312,7 +312,7 @@ public class Hibernate extends AbstractExtensionElement {
                     context);
         }else{
             Transaction t = session.beginTransaction();
-            if(!setVariableIfPossible(t, extensionElement)){
+            if(!setVariableIfPossible(context.getTransformer(), t, extensionElement)){
                 globalTransaction = t;
             }
         }

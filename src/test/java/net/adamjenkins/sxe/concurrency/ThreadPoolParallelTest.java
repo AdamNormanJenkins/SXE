@@ -20,6 +20,9 @@ import static org.junit.Assert.*;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import org.junit.Ignore;
+
 import net.adamjenkins.sxe.XSLTBasedTest;
 import net.adamjenkins.sxe.util.XSLTErrorListener;
 
@@ -28,6 +31,7 @@ import net.adamjenkins.sxe.util.XSLTErrorListener;
  * 
  * @author <a href="mailto:opensource@adamjenkins.net">Adam Norman Jenkins</a>
  */
+@Ignore
 public class ThreadPoolParallelTest extends XSLTBasedTest {
 
     ThreadHolder holder = new ThreadHolder();

@@ -104,7 +104,7 @@ public class JNDI extends AbstractExtensionElement{
         InitialContext ctx;
         if(configuration.size() > 0) ctx = new InitialContext(configuration);
         else ctx = new InitialContext();
-        if(!setVariableIfPossible(ctx, extensionElement)){
+        if(!setVariableIfPossible(context.getTransformer(), ctx, extensionElement)){
             defaultContext = ctx;
         }
     }
@@ -122,7 +122,7 @@ public class JNDI extends AbstractExtensionElement{
      * @throws TransformerException 
      */
     public void defaultContext(XSLProcessorContext context, ElemExtensionCall extensionElement) throws NamingException, TransformerException{
-        setVariableIfPossible(getInitialContext(context, extensionElement), extensionElement);
+        setVariableIfPossible(context.getTransformer(), getInitialContext(context, extensionElement), extensionElement);
     }
 
     /**
@@ -211,7 +211,7 @@ public class JNDI extends AbstractExtensionElement{
         if(!passesAttributeValidation(extensionElement, context, "ref")) return;
         Context ctx = getInitialContext(context, extensionElement);
         Context newContext = ctx.createSubcontext(getAttribute("ref", context, extensionElement));
-        if(!setVariableIfPossible(newContext, extensionElement)){
+        if(!setVariableIfPossible(context.getTransformer(), newContext, extensionElement)){
             defaultContext = newContext;
         }
     }

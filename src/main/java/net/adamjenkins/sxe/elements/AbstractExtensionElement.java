@@ -17,38 +17,42 @@
 package net.adamjenkins.sxe.elements;
 
 import java.io.IOException;
+import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
+
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.ErrorListener;
 import javax.xml.transform.TransformerException;
-import net.adamjenkins.sxe.util.XSLTErrorListener;
-import net.adamjenkins.sxe.util.XSLTUtil;
+
 import org.apache.xalan.extensions.XSLProcessorContext;
 import org.apache.xalan.templates.ElemExtensionCall;
 import org.apache.xalan.templates.ElemVariable;
-import org.apache.xalan.templates.ElemVariablePsuedo;
+import org.apache.xalan.templates.StylesheetRoot;
+import org.apache.xalan.templates.VarBridge;
 import org.apache.xalan.trace.EndSelectionEvent;
 import org.apache.xalan.trace.ExtensionEvent;
 import org.apache.xalan.trace.GenerateEvent;
 import org.apache.xalan.trace.SelectionEvent;
 import org.apache.xalan.trace.TraceListenerEx3;
 import org.apache.xalan.trace.TracerEvent;
-import java.io.StringWriter;
-import java.util.Properties;
-import javax.xml.parsers.ParserConfigurationException;
+import org.apache.xalan.transformer.TransformerImpl;
 import org.apache.xml.serializer.Method;
 import org.apache.xml.serializer.OutputPropertiesFactory;
 import org.apache.xml.serializer.Serializer;
 import org.apache.xml.serializer.SerializerFactory;
-
 import org.apache.xpath.XPath;
 import org.apache.xpath.objects.XObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import net.adamjenkins.sxe.util.XSLTErrorListener;
+import net.adamjenkins.sxe.util.XSLTUtil;
 
 /**
  * Abstract superclass of all SXE extension elements.
@@ -165,12 +169,29 @@ public abstract class AbstractExtensionElement implements TraceListenerEx3{
         return XSLTUtil.isNull(obj);
     }
 
-    protected boolean setVariableIfPossible(Object variable, ElemExtensionCall thisElement){
+    protected boolean setVariableIfPossible(TransformerImpl transformer, Object variable, ElemExtensionCall thisElement) throws TransformerException{
         if(thisElement.getParentElem() instanceof ElemVariable){
             ElemVariable varElement = (ElemVariable)thisElement.getParentElem();
-            //varElement.removeChild(thisElement);
+            //int sourceNode = transformer.getXPathContext().getCurrentNode();
+            //XObject tmp = varElement.getValue(transformer, 0);
+            //get the current variable
+            
+            //transformer.getXPathContext().getVarStack().setLocalVariable(varElement.getIndex(), new XObject(variable));
+            
+            varElement.removeChild(thisElement);
             varElement.setSelect(new XPath(new XObject(variable)));
-            //varElement.appendChild(new XPath(new XObject(variable)));
+            
+            //varElement.execute(transformer);
+            /*StylesheetRoot root = varElement.getStylesheetRoot();
+            ElemVariable newVar = new ElemVariable();
+            newVar.setSelect(new XPath(new XObject(variable)));
+            newVar.setParentElem(varElement.getParentElem());
+            varElement.getParentElem().appendChild(newVar);
+            varElement.getParentElem().removeChild(varElement);
+            newVar.recompose(root);
+            newVar.execute(transformer);*/
+            //varElement.recompose(varElement.getStylesheetRoot());
+            //varElement.appendChild(new XPath(XObject(variable)));
             //varElement.overrideChildDocument(new XPath(new XObject(variable)));
             return true;
         }
@@ -220,7 +241,7 @@ public abstract class AbstractExtensionElement implements TraceListenerEx3{
     }
 
     protected void setVariableOrWriteToOutput(Object value, XSLProcessorContext context, ElemExtensionCall extensionElement) throws TransformerException, IOException{
-        if(!setVariableIfPossible(value, extensionElement)){
+        if(!setVariableIfPossible(context.getTransformer(), value, extensionElement)){
             context.outputToResultTree(context.getStylesheet(), value);
         }
     }

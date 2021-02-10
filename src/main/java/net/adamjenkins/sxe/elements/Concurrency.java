@@ -32,9 +32,13 @@ import javax.xml.transform.TransformerException;
 
 import org.apache.xalan.extensions.XSLProcessorContext;
 import org.apache.xalan.templates.ElemExtensionCall;
+import org.apache.xml.serializer.SerializationHandler;
 import org.apache.xpath.objects.XObject;
 
 import net.adamjenkins.sxe.elements.concurrency.EmbeddedStylesheetDefinition;
+import net.adamjenkins.sxe.elements.concurrency.SXEMultithreadedSerializationHandler;
+import net.adamjenkins.sxe.elements.concurrency.ThreadedXalanProcessor;
+import net.adamjenkins.sxe.util.XSLTUtil;
 
 /**
  * Elements for safely performing concurrent operations.
@@ -210,11 +214,11 @@ public class Concurrency extends AbstractExtensionElement{
      */
     public synchronized void parallel(XSLProcessorContext context, ElemExtensionCall extensionElement) throws ParserConfigurationException {
         //TODO: finish this extension BIG JOB!
-        /*EmbeddedStylesheetDefinition styleSheet;
+        EmbeddedStylesheetDefinition styleSheet;
         SerializationHandler handler = context.getTransformer().getSerializationHandler();
         if(!(handler instanceof SXEMultithreadedSerializationHandler)){
             //we're still using an old handler here, better do something with it
-            handler = new SXEMutlithreadedSerializationHander(handler);
+            handler = new SXEMultithreadedSerializationHandler(handler);
             context.getTransformer().setSerializationHandler(handler);
         }
         //we have to swap out the serialization handler here
@@ -229,8 +233,7 @@ public class Concurrency extends AbstractExtensionElement{
                 context,
                 extensionElement,
                 runningThreads,
-                styleSheet,
-                ((SXEMutlithreadedSerializationHander)handler.spawnResults()));
+                styleSheet);
         if(hasAttribute(extensionElement, "pool")){
             try{
                 ThreadPoolExecutor executor = (ThreadPoolExecutor)getXObject("pool", context, extensionElement).object();
@@ -240,7 +243,7 @@ public class Concurrency extends AbstractExtensionElement{
             }
         }else{
             processor.start();
-        }*/
+        }
     }
 
     /**
@@ -261,12 +264,13 @@ public class Concurrency extends AbstractExtensionElement{
      * </table>
      * @param context
      * @param extensionElement
+     * @throws TransformerException 
      */
-    public void threadPool(XSLProcessorContext context, ElemExtensionCall extensionElement){
+    public void threadPool(XSLProcessorContext context, ElemExtensionCall extensionElement) throws TransformerException{
         int min = getIntegerXPath("minSize", context, extensionElement, 1);
         int max = getIntegerXPath("maxSize", context, extensionElement, 5);
         int timeout = getIntegerXPath("timeout", context, extensionElement, 60);
-        setVariableIfPossible(new ThreadPoolExecutor(min, max,timeout, TimeUnit.SECONDS,new LinkedBlockingQueue<Runnable>()),
+        setVariableIfPossible(context.getTransformer(), new ThreadPoolExecutor(min, max,timeout, TimeUnit.SECONDS,new LinkedBlockingQueue<Runnable>()),
                                 extensionElement);
 
     }
@@ -291,7 +295,7 @@ public class Concurrency extends AbstractExtensionElement{
      * @throws IOException
      */
     public void readWriteLock(XSLProcessorContext context, ElemExtensionCall extensionElement) throws TransformerException, MalformedURLException, FileNotFoundException, IOException{
-        setVariableIfPossible(new ReentrantReadWriteLock(), extensionElement);
+        setVariableIfPossible(context.getTransformer(), new ReentrantReadWriteLock(), extensionElement);
     }
 
     /**

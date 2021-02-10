@@ -29,7 +29,8 @@ public class MockBean {
 
     private double decimal;
 
-    public MockBean(){}
+    public MockBean(){
+    }
 
     public MockBean(String text, boolean bool, double decimal) {
         this.text = text;

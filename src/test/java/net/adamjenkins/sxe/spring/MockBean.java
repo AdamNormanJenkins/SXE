@@ -16,13 +16,22 @@
  */
 package net.adamjenkins.sxe.spring;
 
+import org.apache.xalan.extensions.ExpressionContext;
+
 /**
  * A mock bean.
  *
  * @author <a href="mailto:opensource@adamjenkins.net">Adam Norman Jenkins</a>
  */
 public class MockBean {
+	
+	public MockBean() {
+	}
 
+	public String aMethod() {
+		return "aMethod";
+	}
+	
     public String toString(){
         return "MockBean";
     }

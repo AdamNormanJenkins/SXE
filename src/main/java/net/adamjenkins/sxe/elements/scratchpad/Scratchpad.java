@@ -42,7 +42,7 @@ public class Scratchpad {
         ElemVariable var = new ElemVariable();
         var.setName(new QName("test"));
         var.setSelect(new XPath(new XString("blah")));
-        VarBridge.addVariable(var, context.getStylesheet());
+        //VarBridge.addVariable(var, context.getStylesheet());
     }
 
     public static void outerStatic(XSLProcessorContext context, ElemExtensionCall extensionElement) {

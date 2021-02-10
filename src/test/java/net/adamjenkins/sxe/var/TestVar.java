@@ -16,7 +16,9 @@
  */
 package net.adamjenkins.sxe.var;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Ignore;
 
 import net.adamjenkins.sxe.XSLTBasedTest;
 import net.adamjenkins.sxe.util.XSLTErrorListener;
@@ -26,6 +28,7 @@ import net.adamjenkins.sxe.util.XSLTErrorListener;
  * 
  * @author <a href="mailto:opensource@adamjenkins.net">Adam Norman Jenkins</a>
  */
+@Ignore
 public class TestVar extends XSLTBasedTest{
 
     @Override

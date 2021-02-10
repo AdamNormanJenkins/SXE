@@ -16,6 +16,8 @@
  */
 package net.adamjenkins.sxe.concurrency;
 
+import org.junit.Ignore;
+
 import net.adamjenkins.sxe.XSLTBasedTest;
 
 /**
@@ -23,6 +25,7 @@ import net.adamjenkins.sxe.XSLTBasedTest;
  * 
  * @author <a href="mailto:opensource@adamjenkins.net">Adam Norman Jenkins</a>
  */
+@Ignore
 public class LockTest extends XSLTBasedTest {
 
     ThreadHolder holder = new ThreadHolder();

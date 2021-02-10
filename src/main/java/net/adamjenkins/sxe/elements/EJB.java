@@ -85,7 +85,7 @@ public class EJB extends AbstractExtensionElement{
             Object o = resolvedContext.lookup(s);
             cache.put(newKey, o);
         }
-        if(!setVariableIfPossible(cache.get(newKey), extensionElement)) context.outputToResultTree(context.getStylesheet(), cache.get(newKey));
+        if(!setVariableIfPossible(context.getTransformer(), cache.get(newKey), extensionElement)) context.outputToResultTree(context.getStylesheet(), cache.get(newKey));
     }
 
     private class ContextKey{

@@ -19,7 +19,6 @@ package net.adamjenkins.sxe.util;
 import java.io.StringWriter;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.Vector;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -29,9 +28,11 @@ import javax.xml.transform.TransformerException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.xalan.extensions.XSLProcessorContext;
-import org.apache.xalan.res.XSLMessages;
 import org.apache.xalan.templates.ElemExtensionCall;
-import org.apache.xalan.transformer.TransformerImpl;
+import org.apache.xalan.templates.ElemValueOf;
+import org.apache.xalan.templates.ElemVariable;
+import org.apache.xalan.templates.PassThroughVariableStack;
+import org.apache.xml.dtm.ref.DTMNodeIterator;
 import org.apache.xml.serializer.DOMSerializer;
 import org.apache.xml.serializer.Method;
 import org.apache.xml.serializer.OutputPropertiesFactory;
@@ -41,10 +42,10 @@ import org.apache.xml.utils.QName;
 import org.apache.xpath.Expression;
 import org.apache.xpath.XPath;
 import org.apache.xpath.XPathContext;
+import org.apache.xpath.compiler.FunctionTable;
 import org.apache.xpath.objects.XNodeSet;
 import org.apache.xpath.objects.XNull;
 import org.apache.xpath.objects.XObject;
-import org.apache.xpath.res.XPATHErrorResources;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -61,44 +62,53 @@ import net.adamjenkins.sxe.elements.concurrency.EmbeddedStylesheetDefinition;
 public class XSLTUtil {
     
     private static final Logger log = LoggerFactory.getLogger(XSLTUtil.class);
-    
-    /**
-     * Variable reference.
-     */
-    public static class VariableReference{
-    	private boolean global;
-    	private int index;
-		public boolean isGlobal() {
-			return global;
-		}
-		public void setGlobal(boolean global) {
-			this.global = global;
-		}
-		public int getIndex() {
-			return index;
-		}
-		public void setIndex(int index) {
-			this.index = index;
-		}
-    	
+
+    private static PassThroughVariableStack getPassthroughStack(XSLProcessorContext context) {
+    	//this probably needs to be made threadsafe at some point
+    	if(!(context.getTransformer().getXPathContext().getVarStack() instanceof PassThroughVariableStack)) {
+			PassThroughVariableStack newStack = new PassThroughVariableStack(context.getTransformer().getXPathContext().getVarStack());
+			context.getTransformer().getXPathContext().setVarStack(newStack);
+    	}
+    	return (PassThroughVariableStack)context.getTransformer().getXPathContext().getVarStack();
+    }
+    public static void setVariable(XSLProcessorContext context, ElemExtensionCall extensionElement, Object value) {
+	    //so, you have to set it in the parent
+	    PassThroughVariableStack stack = getPassthroughStack(context);
+	    //TODO: better error handling here for class cast exception
+	    ElemVariable parent = (ElemVariable)extensionElement.getParentElem();
+	    XObject var = new XObject(value);
+	    stack.overrideLoadVariable(parent.getIndex(), var);
     }
     
-    public static XObject getXObject(final String xpathAttributeName, final XSLProcessorContext context, final ElemExtensionCall extensionElement){
-        XPathContext xCtx = context.getTransformer().getXPathContext();    
-        String selectExpressionString = null;
+    public static XObject getXObject(final String xpathAttributeName, final XSLProcessorContext context, final ElemExtensionCall extensionElement) throws TransformerException{
+    	String selectExpressionString = extensionElement.getAttribute(xpathAttributeName);
+    	//TODO: we need some checking here to make sure it conforms to the format $myVariable
+    	/*String variableName = selectExpressionString.substring(1);
+    	QName q = new QName(null, variableName);
+    	XPathContext xctxt = context.getTransformer().getXPathContext();
+		xctxt.setNamespaceContext(extensionElement);
+		return xctxt.getVarStack().getVariableOrParam(xctxt,q);
+        XPathContext xCtx = context.getTransformer().getXPathContext();
+		String selectExpressionString = null;*/
+    	XPathContext xCtx = context.getTransformer().getXPathContext();
         boolean namespacePushed = false;
         boolean expressionPushed = false;
-        try{           
-            selectExpressionString = extensionElement.getAttribute(xpathAttributeName);           
-            XPath xpath = new XPath(selectExpressionString, xCtx.getSAXLocator(), extensionElement, XPath.SELECT);
-
+        try{   
+            selectExpressionString = extensionElement.getAttribute(xpathAttributeName); 
+            XPath xpath = new XPath(
+            		selectExpressionString, 
+            		extensionElement, 
+            		extensionElement, 
+            		XPath.SELECT,
+            		xCtx.getErrorListener(), 
+                    new FunctionTable());
             xCtx.pushNamespaceContext(extensionElement);            
             namespacePushed = true;
             int current = xCtx.getCurrentNode();
             xCtx.pushCurrentNodeAndExpression(current, current);        
             expressionPushed=true;
             Expression expr = xpath.getExpression();
-            return expr.execute(xCtx);  
+            return expr.execute(xCtx);
         }catch(Throwable t){
             log.error("Error evaluating xpath attribute " + xpathAttributeName + " [" + selectExpressionString + "]", t);
             return null;
@@ -107,7 +117,7 @@ public class XSLTUtil {
         {            
             if(namespacePushed) xCtx.popNamespaceContext();
             if(expressionPushed) xCtx.popCurrentNodeAndExpression();         
-        }          
+        }   
     }
 
     public static String getXPath(final String xpathAttributeName, final XSLProcessorContext context, final ElemExtensionCall extensionElement){

@@ -7,7 +7,7 @@
     <xsl:template match="/">
         <xsl:variable name="mockBean">
             <bean:instantiate class="net.adamjenkins.sxe.bean.MockBean"/>
-        </xsl:variable>
+        </xsl:variable>        
         <bean:bind target="$mockBean" text="'text'" bool="true()" decimal="1.1"/>
         <xsl:value-of select="$mockBean"/>
     </xsl:template>

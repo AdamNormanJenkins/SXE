@@ -118,7 +118,7 @@ public class Mail extends AbstractExtensionElement{
             if(authenticator != null) session = Session.getInstance(mailProperties, authenticator);
             else session = Session.getInstance(mailProperties);
         }
-        if(!setVariableIfPossible(session, extensionElement)){
+        if(!setVariableIfPossible(context.getTransformer(), session, extensionElement)){
             globalSession = session;
         }
     }
