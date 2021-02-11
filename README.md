@@ -3,6 +3,8 @@ Some Xalan Extensions (SXE)
 
 Adds functionality to Xalan that I've found helpful over the last 20 years of contracting.<br/>
 
+_Logging in XSLT with Xalan_
+
 See the example below for how to add logging to your XSLT.  For further information see the javadoc which is extensive.
 
 ```
