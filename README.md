@@ -28,3 +28,5 @@ See the example below (this one is adding logging to your XSLT, but there are ot
 For details on how to use SXE for XSLT logging, see this article: https://www.linkedin.com/pulse/logging-xsltxalan-adam-jenkins/
 
 For details on how to use SXE for Assertions, see this article: https://www.linkedin.com/pulse/assertions-xslt-javaxalan-adam-jenkins
+
+Maven: https://search.maven.org/artifact/net.adamjenkins/sxe/1.1/jar
