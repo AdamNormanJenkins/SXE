@@ -3,9 +3,7 @@ Some Xalan Extensions (SXE)
 
 Adds functionality to Xalan that I've found helpful over the last 20 years of contracting.<br/>
 
-_Logging in XSLT with Xalan_
-
-See the example below for how to add logging to your XSLT.  For further information see the javadoc which is extensive.
+See the example below (this one is adding logging to your XSLT, but there are other helper elements and functions).  For further information see the javadoc which is pretty extensive.
 
 ```
 <?xml version="1.0" encoding="UTF-8"?>
@@ -26,6 +24,7 @@ See the example below for how to add logging to your XSLT.  For further informat
     </xsl:template>            
 </xsl:stylesheet>
 ```
+
 For details on how to use SXE for XSLT logging, see this article: https://www.linkedin.com/pulse/logging-xsltxalan-adam-jenkins/
 
 For details on how to use SXE for Assertions, see this article: https://www.linkedin.com/pulse/assertions-xslt-javaxalan-adam-jenkins
