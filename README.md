@@ -26,3 +26,4 @@ See the example below for how to add logging to your XSLT.  For further informat
     </xsl:template>            
 </xsl:stylesheet>
 ```
+See this article for more on XSLT: https://www.linkedin.com/pulse/logging-xsltxalan-adam-jenkins/
