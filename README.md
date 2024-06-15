@@ -1,4 +1,8 @@
 # SXE
+
+Since Xalan has fallen out of regular use this project should be considered unsupported :)
+
+
 Some Xalan Extensions (SXE)
 
 Adds functionality to Xalan that I've found helpful over the last 20 years of contracting.<br/>
